@@ -1,0 +1,57 @@
+describe('tictactoe_teszteles', () => {
+  it('vanOldal', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+  })
+  it('van9div', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.get('.jatekter').find('.elem').should('have.length', 9)
+  })
+  it('elsoKattintasraX', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.get('.jatekter .elem').first().as('elso')
+    cy.get('@elso').click()
+    cy.get('@elso').should('contain', 'X')
+  })
+  it('elsoKattXMasodikO', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.get('.jatekter .elem').eq(0).as('elso')
+    cy.get('.jatekter .elem').eq(1).as('masodik')
+    cy.get('@elso').click()
+    cy.get('@elso').should('contain', 'X')
+    cy.get('@masodik').click()
+    cy.get('@masodik').should('contain', 'O')
+  })
+  it('masodikKattraNemvaltMezot', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.get('.jatekter .elem').eq(0).as('elso')
+    cy.get('@elso').click()
+    cy.get('@elso').should('contain', 'X')
+    cy.get('@elso').click()
+    cy.get('@elso').should('contain', 'X')
+  })
+  it('vizszintesGyozelemX', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('A győztes: X')
+    })
+    cy.get('.jatekter .elem').as('mezok')
+    cy.get('@mezok').eq(0).click()
+    cy.get('@mezok').eq(3).click()
+    cy.get('@mezok').eq(1).click()
+    cy.get('@mezok').eq(4).click()
+    cy.get('@mezok').eq(2).click()
+  })
+  it('vizszintesGyozelemO', () => {
+    cy.visit('https://hrvthlevi.github.io/tictactoeJS--260326/')
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('A győztes: O')
+    })
+    cy.get('.jatekter .elem').as('mezok')
+    cy.get('@mezok').eq(3).click()
+    cy.get('@mezok').eq(0).click()
+    cy.get('@mezok').eq(4).click()
+    cy.get('@mezok').eq(1).click()
+    cy.get('@mezok').eq(8).click()
+    cy.get('@mezok').eq(2).click()
+  })
+})
